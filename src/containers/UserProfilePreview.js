@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Avatar,
          Block }            from 'rebass';
+import { connect }          from 'react-redux';
+import { Link }             from 'react-router';
 
-// thanks to artworkbean for the great svg - taken from the Noun Project
 class UserProfilePreview extends Component {
   renderSignUpOrLogin = () => {
+      // TODO: after auth is wired up change to <Link to={hasLogin() ? "/login" : "/signup"}>
     return (
-      <div><p>Sign up or Log in</p></div>
+      <Link to="/signup">
+        <p>Sign up or Log in</p>
+      </Link>
     )
   }
   renderIsAuthenticated = () => {
@@ -25,4 +29,8 @@ class UserProfilePreview extends Component {
   }
 }
 
-export default UserProfilePreview;
+function mapStateToProps(state) {
+  return {}
+}
+
+export default connect(mapStateToProps)(UserProfilePreview);

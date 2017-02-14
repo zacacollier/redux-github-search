@@ -1,10 +1,40 @@
 .app {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    margin: 3em auto;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: 3em auto;
+  width: 100%;
+}
+.app .signup-login {
+  width: 100%;
+}
+.app .signup-login form {
+  font-family: inherit;
+  text-align: center;
+}
+
+.app .signup-login h2 {
+  text-align: center;
+  line-height: 2.5em;
+  padding: 0 1em;
+}
+.app .signup-login .Button {
+  align-self: center;
+  flex-grow: 2;
+}
+.app .signup-login svg {
+  height: 7.5em;
+  width: 7.5em;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
+}
+.app .signup-login svg:hover {
+  height: 7.5em;
+  width: 7.5em;
+  color: rgba(5, 5, 5, .7);
 }
 .header {
     display: flex;
@@ -18,10 +48,14 @@
 .profile-preview {
   order: 1;
 }
-
-.profile-preview div > p {
+.profile-preview a {
+  color: rgba(1, 1, 1, .6);
+  text-decoration: none;
+}
+.profile-preview a > p {
   align-self: center;
   font: 1em system-ui;
+  color: inherit;
   min-height: 7.75em;
   line-height: 7.5em;
   padding: .5em;
@@ -29,14 +63,13 @@
   flex-grow: 2;
   background-color: rgba(5, 5, 5, .4);
   box-shadow: 0 0 5px rgba(15, 15, 15, .4);
-  color: rgba(1, 1, 1, .6);
   -webkit-transition: all 0.30s ease-in-out;
   -moz-transition: all 0.30s ease-in-out;
   -ms-transition: all 0.30s ease-in-out;
   -o-transition: all 0.30s ease-in-out;
 }
 
-.profile-preview div > p:hover {
+.profile-preview a > p:hover {
   background-color: rgba(.50, .50, .50, .2);
   box-shadow: 0 0 14px rgba(15, 15, 15, .9);
   color: rgba(1, 1, 1, .9);
