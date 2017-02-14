@@ -1,14 +1,25 @@
-import { SIGN_IN_USER, SIGN_OUT_USER } from '../actions';
+import { AUTH_ERROR,
+         AUTH_USER,
+         SIGN_IN_USER,
+         SIGN_OUT_USER } from '../actions';
 
 const initialState = {
-  authenticated: false
+  authenticated: false,
+  error: null
 };
 
 export default function lists(state = initialState, action) {
   switch (action.type) {
-    case SIGN_IN_USER:
+    case AUTH_ERROR:
       return {
-        ...state, authenticated: true
+        ...state,
+        error: action.payload.message
+      }
+    case AUTH_USER:
+      return {
+        ...state,
+        authenticated: true,
+        error: null
       }
     case SIGN_OUT_USER:
       return {
