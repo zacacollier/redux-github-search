@@ -1,6 +1,5 @@
 import { AUTH_ERROR,
          AUTH_USER,
-         SIGN_IN_USER,
          SIGN_OUT_USER } from '../actions';
 
 const initialState = {
