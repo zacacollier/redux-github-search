@@ -20,6 +20,7 @@ const config = {
   messagingSenderId: "104513704867"
 }
 const provider = new Firebase.auth.GithubAuthProvider();
+Firebase.initializeApp(config);
 
 export function authUser() {
   return {
@@ -48,10 +49,10 @@ export const requestGitHubUser = (term = null) => {
 
 export function signInUser(credentials) {
   return function(dispatch) {
-    Firebase.auth().signInWithRedirect(provider)
+    Firebase.auth().signInWithPopup(provider)
       .then(result => {
         dispatch(authUser());
-        browserHistory.push('/home')
+        browserHistory.push('/')
       })
       .catch(error => {
         dispatch(authError(error))

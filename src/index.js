@@ -7,12 +7,6 @@ import {
   Route,
   Router,
        }              from 'react-router';
-import {
-  createStore,
-  applyMiddleware,
-  combineReducers,
-       }              from 'redux';
-import thunk          from 'redux-thunk';
 import App            from './components/App';
 import Home           from './containers/Home';
 import Signup         from './containers/Signup';
