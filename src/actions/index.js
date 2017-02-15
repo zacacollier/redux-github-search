@@ -22,9 +22,10 @@ const config = {
 const provider = new Firebase.auth.GithubAuthProvider();
 Firebase.initializeApp(config);
 
-export function authUser() {
+export function authUser(response) {
   return {
-    type: AUTH_USER
+    type: AUTH_USER,
+    payload: response
   }
 }
 
@@ -51,7 +52,7 @@ export function signInUser(credentials) {
   return function(dispatch) {
     Firebase.auth().signInWithPopup(provider)
       .then(result => {
-        dispatch(authUser());
+        dispatch(authUser(result));
         browserHistory.push('/')
       })
       .catch(error => {
