@@ -23,13 +23,13 @@ class UserProfilePreview extends Component {
           <Avatar
             circle
             size={100}
-            src={this.props.user.photoURL}
+            src={this.props.profile.avatar_url}
           />
           <Heading level={5}>
-            { this.props.user.displayName.split(' ')[0] }
+            { this.props.profile.name.split(' ')[0] }
           </Heading>
           <Badge pill rounded theme="primary">
-           <GoRepo /> Repos
+           <GoRepo /> { this.props.profile.public_repos }
           </Badge>
         </div>
       )
@@ -54,8 +54,8 @@ class UserProfilePreview extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.authenticated,
-    user: state.user.providerUserInfo.user
+    isAuthenticated: state.user.isAuthenticated,
+    profile: state.user.authUserProfile
   }
 }
 

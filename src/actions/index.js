@@ -45,7 +45,21 @@ export function authError(error) {
   }
 }
 
-// props should be state.user.providerUserInfo
+// Send OAuth request to GitHub via Firebase,
+// then dispatch a request for User Profile data
+export function signInUser(credentials) {
+  return function(dispatch) {
+    Firebase.auth().signInWithPopup(provider)
+      .then(response => {
+        dispatch(requestGitHubUserProfile(response));
+      })
+      .catch(error => {
+        dispatch(authError(error));
+      })
+  }
+}
+// After request is resolved, dispatch response body
+// to user reducer and update state
 export function requestGitHubUserProfile(authResponse) {
   return function(dispatch) {
     request
@@ -53,23 +67,10 @@ export function requestGitHubUserProfile(authResponse) {
       .set(`Authorization`, `token ${authResponse.credential.accessToken}`)
       .then(response => {
         dispatch(getAuthUserProfile(response))
+        browserHistory.push('/')
       })
       .catch(error => {
         dispatch(authError(error))
-      })
-  }
-}
-
-export function signInUser(credentials) {
-  return function(dispatch) {
-    Firebase.auth().signInWithPopup(provider)
-      .then(response => {
-        dispatch(authUser(response));
-        dispatch(requestGitHubUserProfile(response));
-        browserHistory.push('/');
-      })
-      .catch(error => {
-        dispatch(authError(error));
       })
   }
 }
