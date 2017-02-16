@@ -5,7 +5,7 @@ import { Button,
          Message,
          Space   }          from 'rebass';
 import { connect }          from 'react-redux'
-import { reduxForm } from 'redux-form';
+import { reduxForm }        from 'redux-form';
 import * as Actions         from '../actions';
 
 class Signup extends Component {

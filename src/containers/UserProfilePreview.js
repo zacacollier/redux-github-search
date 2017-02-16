@@ -1,7 +1,11 @@
 import React, {
        Component,
        PropTypes }          from 'react';
-import { Avatar }           from 'rebass';
+import { Avatar,
+         Badge,
+         Heading }          from 'rebass';
+import { FaGithub }         from 'react-icons/lib/fa'
+import { GoRepo }           from 'react-icons/lib/go'
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
 
@@ -12,24 +16,29 @@ class UserProfilePreview extends Component {
     size: PropTypes.number,
     src: PropTypes.string,
   }
-  renderSignUpOrLogin = () => {
-      // TODO: after auth is wired up change to <Link to={hasLogin() ? "/login" : "/signup"}>
-  }
   renderUserProfilePreview = () => {
     if (this.props.isAuthenticated) {
       return (
-        <Avatar
-          circle
-          size={100}
-          src="http://lorempixel.com/64/64/cats"
-        />
+        <div>
+          <Avatar
+            circle
+            size={100}
+            src={this.props.user.photoURL}
+          />
+          <Heading level={5}>
+            { this.props.user.displayName.split(' ')[0] }
+          </Heading>
+          <Badge pill rounded theme="primary">
+           <GoRepo /> Repos
+          </Badge>
+        </div>
       )
 
     }
     else {
       return (
         <Link to="/signup">
-          <p>Sign up or Log in</p>
+          <p>Log in with <FaGithub /></p>
         </Link>
       )
     }
@@ -45,7 +54,8 @@ class UserProfilePreview extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.authenticated
+    isAuthenticated: state.auth.authenticated,
+    user: state.user.providerUserInfo.user
   }
 }
 

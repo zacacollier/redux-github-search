@@ -2,13 +2,14 @@ import request            from 'superagent';
 import Firebase           from 'firebase';
 import { browserHistory } from 'react-router';
 
-export const AUTH_ERROR      = 'AUTH_ERROR';
-export const AUTH_USER       = 'AUTH_USER';
-export const REQUEST_GH_USER = 'REQUEST_GH_USER';
-export const SIGN_IN_USER    = 'SIGN_IN_USER';
-export const SIGN_OUT_USER   = 'SIGN_OUT_USER';
+export const AUTH_ERROR        = 'AUTH_ERROR';
+export const AUTH_USER         = 'AUTH_USER';
+export const AUTH_USER_PROFILE = 'AUTH_USER_PROFILE';
+export const REQUEST_GH_USER   = 'REQUEST_GH_USER';
+export const SIGN_IN_USER      = 'SIGN_IN_USER';
+export const SIGN_OUT_USER     = 'SIGN_OUT_USER';
 
-const API_URL = 'https://api.github.com/search/users?q=';
+const GH_USER_URL = 'https://api.github.com/user';
 
 // Firebase configuration & initialization
 // console.log(`Firebase ERROR: ${error.code} : ${error.message} for user ${error.email} with ${error.credential}`))
@@ -21,10 +22,18 @@ const config = {
 }
 const provider = new Firebase.auth.GithubAuthProvider();
 Firebase.initializeApp(config);
+provider.addScope('repo');
 
 export function authUser(response) {
   return {
     type: AUTH_USER,
+    payload: response
+  }
+}
+
+export function getAuthUserProfile(response) {
+  return {
+    type: AUTH_USER_PROFILE,
     payload: response
   }
 }
@@ -36,27 +45,31 @@ export function authError(error) {
   }
 }
 
-export const requestGitHubUser = (term = null) => {
+// props should be state.user.providerUserInfo
+export function requestGitHubUserProfile(authResponse) {
   return function(dispatch) {
-    request.get(`${API_URL}${term.replace(/\s/g, '+')}`)
-    .then(response => {
-      dispatch({
-        type: REQUEST_GH_USER,
-        payload: response
-      });
-    });
+    request
+      .get(`${GH_USER_URL}`)
+      .set(`Authorization`, `token ${authResponse.credential.accessToken}`)
+      .then(response => {
+        dispatch(getAuthUserProfile(response))
+      })
+      .catch(error => {
+        dispatch(authError(error))
+      })
   }
 }
 
 export function signInUser(credentials) {
   return function(dispatch) {
     Firebase.auth().signInWithPopup(provider)
-      .then(result => {
-        dispatch(authUser(result));
-        browserHistory.push('/')
+      .then(response => {
+        dispatch(authUser(response));
+        dispatch(requestGitHubUserProfile(response));
+        browserHistory.push('/');
       })
       .catch(error => {
-        dispatch(authError(error))
+        dispatch(authError(error));
       })
   }
 }

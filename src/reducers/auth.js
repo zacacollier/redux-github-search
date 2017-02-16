@@ -1,6 +1,6 @@
 import { AUTH_ERROR,
          AUTH_USER,
-         SIGN_OUT_USER } from '../actions';
+         SIGN_OUT_USER  } from '../actions';
 
 const initialState = {
   authenticated: false,
