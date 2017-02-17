@@ -10,7 +10,7 @@ import {
 import App            from './components/App';
 import Home           from './containers/Home';
 import Signup         from './containers/Signup';
-import Login          from './containers/Login';
+import RequireAuth    from './containers/RequireAuth';
 import configureStore from './store/configureStore';
 import                   './index.css';
 
@@ -20,9 +20,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home} />
+        <IndexRoute component={RequireAuth(Home)} />
         <Route path="signup" component={Signup} />
-        <Route path="login" component={Login} />
       </Route>
     </Router>
   </Provider>,

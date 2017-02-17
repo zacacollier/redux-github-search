@@ -7,6 +7,9 @@ import UserProfilePreview     from '../containers/UserProfilePreview';
 import                             '../styles/App.css';
 
 class Home extends Component {
+  componentWillMount() {
+    this.props.requestGitHubUserProfile(this.props.accessToken)
+  }
   render() {
     return (
       <div className='app'>
@@ -21,7 +24,8 @@ class Home extends Component {
 
 function mapStateToProps(state) {
   return {
-    lists: state.lists
+    lists: state.lists,
+    accessToken: state.auth.accessToken
   }
 }
 
@@ -31,4 +35,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps, Actions)(Home);

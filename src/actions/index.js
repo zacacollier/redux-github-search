@@ -12,7 +12,6 @@ export const SIGN_OUT_USER     = 'SIGN_OUT_USER';
 const GH_USER_URL = 'https://api.github.com/user';
 
 // Firebase configuration & initialization
-// console.log(`Firebase ERROR: ${error.code} : ${error.message} for user ${error.email} with ${error.credential}`))
 const config = {
   apiKey: "AIzaSyBCJglFJI71_M64_JpEMjbhBeMoHCz-3OQ",
   authDomain: "redux-github-search.firebaseapp.com",
@@ -53,16 +52,13 @@ export function signInUser(credentials) {
       .then(response => {
         let token = response.credential.accessToken
         dispatch(authUser(token));
+        browserHistory.push('/')
       })
       .catch(error => {
         dispatch(authError(error));
       })
   }
 }
-// After request is resolved, dispatch response body
-// to user reducer and update state
-// TODO: refactor to save accessToken to store, then use it here,
-//       rather than rely on data passed in from verifyAuth
 export function requestGitHubUserProfile(authResponse) {
   return function (dispatch) {
     request
@@ -70,7 +66,6 @@ export function requestGitHubUserProfile(authResponse) {
       .set(`Authorization`, `token ${authResponse.credential.accessToken}`)
       .then(response => {
         dispatch(getAuthUserProfile(response))
-        browserHistory.push('/')
       })
       .catch(error => {
         dispatch(authError(error))

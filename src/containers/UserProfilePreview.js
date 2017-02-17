@@ -8,6 +8,7 @@ import { FaGithub }         from 'react-icons/lib/fa'
 import { GoRepo }           from 'react-icons/lib/go'
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
+import * as Actions         from '../actions';
 
 class UserProfilePreview extends Component {
   static PropTypes = {
@@ -17,7 +18,7 @@ class UserProfilePreview extends Component {
     src: PropTypes.string,
   }
   renderUserProfilePreview = () => {
-    if (this.props.isAuthenticated) {
+    if (this.props.authenticated && this.props.accessToken) {
       return (
         <div>
           <Avatar
@@ -46,7 +47,7 @@ class UserProfilePreview extends Component {
   render() {
     return (
       <div className='profile-preview'>
-      { this.renderUserProfilePreview() }
+      { this.props.accessToken && this.renderUserProfilePreview() }
       </div>
     )
   }
@@ -54,9 +55,10 @@ class UserProfilePreview extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.user.isAuthenticated,
-    profile: state.user.authUserProfile
+    authenticated: state.auth.authenticated,
+    profile: state.user.authUserProfile,
+    accessToken: state.auth.accessToken
   }
 }
 
-export default connect(mapStateToProps)(UserProfilePreview);
+export default connect(mapStateToProps, Actions)(UserProfilePreview);
