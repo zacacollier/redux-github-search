@@ -3,11 +3,12 @@ import { AUTH_ERROR,
          SIGN_OUT_USER  } from '../actions';
 
 const initialState = {
+  accessToken: null,
   authenticated: false,
   error: null
 };
 
-export default function lists(state = initialState, action) {
+export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
     case AUTH_ERROR:
       return {
@@ -17,12 +18,14 @@ export default function lists(state = initialState, action) {
     case AUTH_USER:
       return {
         ...state,
+        accessToken: action.payload,
         authenticated: true,
         error: null
       }
     case SIGN_OUT_USER:
       return {
-        ...state, authenticated: false
+        ...state,
+        authenticated: false
       }
     default:
       return state;

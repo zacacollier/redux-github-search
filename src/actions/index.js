@@ -48,10 +48,11 @@ export function authError(error) {
 // Send OAuth request to GitHub via Firebase,
 // then dispatch a request for User Profile data
 export function signInUser(credentials) {
-  return function(dispatch) {
+  return function (dispatch) {
     Firebase.auth().signInWithPopup(provider)
       .then(response => {
-        dispatch(requestGitHubUserProfile(response));
+        let token = response.credential.accessToken
+        dispatch(authUser(token));
       })
       .catch(error => {
         dispatch(authError(error));
@@ -60,8 +61,10 @@ export function signInUser(credentials) {
 }
 // After request is resolved, dispatch response body
 // to user reducer and update state
+// TODO: refactor to save accessToken to store, then use it here,
+//       rather than rely on data passed in from verifyAuth
 export function requestGitHubUserProfile(authResponse) {
-  return function(dispatch) {
+  return function (dispatch) {
     request
       .get(`${GH_USER_URL}`)
       .set(`Authorization`, `token ${authResponse.credential.accessToken}`)
@@ -72,6 +75,19 @@ export function requestGitHubUserProfile(authResponse) {
       .catch(error => {
         dispatch(authError(error))
       })
+  }
+}
+
+export function verifyAuth() {
+  return function (dispatch) {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        dispatch(authUser(user));
+      }
+      else {
+        dispatch(signOutUser());
+      }
+    })
   }
 }
 

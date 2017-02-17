@@ -3,6 +3,7 @@ import { createStore,
          applyMiddleware } from 'redux';
 import reduxThunk          from 'redux-thunk';
 import rootReducer         from '../reducers';
+import * as Actions        from '../actions';
 
 export default function configureStore(initialState) {
   const store = createStore(
@@ -20,6 +21,8 @@ export default function configureStore(initialState) {
       store.replaceReducer(nextRootReducer);
     });
   }
+
+  store.dispatch(Actions.verifyAuth());
 
   return store;
 }
