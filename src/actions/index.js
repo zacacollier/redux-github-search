@@ -59,12 +59,13 @@ export function signInUser(credentials) {
       })
   }
 }
-export function requestGitHubUserProfile(authResponse) {
+export function requestGitHubUserProfile(accessToken) {
   return function (dispatch) {
     request
       .get(`${GH_USER_URL}`)
-      .set(`Authorization`, `token ${authResponse.credential.accessToken}`)
+      .set(`Authorization`, `token ${accessToken.stsTokenManager.accessToken}`)
       .then(response => {
+        console.log(response)
         dispatch(getAuthUserProfile(response))
       })
       .catch(error => {

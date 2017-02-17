@@ -1,9 +1,9 @@
 import { AUTH_USER, AUTH_USER_PROFILE } from '../actions';
 
 const initialState = {
-  authUserProfile: [],
+  authUserProfile: null,
   isAuthenticated: false,
-  providerUserInfo: [],
+  providerUserInfo: null,
   savedLists: []
 }
 

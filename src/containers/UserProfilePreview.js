@@ -4,37 +4,37 @@ import React, {
 import { Avatar,
          Badge,
          Heading }          from 'rebass';
-import { FaGithub }         from 'react-icons/lib/fa'
-import { GoRepo }           from 'react-icons/lib/go'
+import { FaGithub }         from 'react-icons/lib/fa';
+import { GoRepo }           from 'react-icons/lib/go';
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
+import Spinner              from 'react-spinkit';
 import * as Actions         from '../actions';
 
 class UserProfilePreview extends Component {
   static PropTypes = {
     Avatar: PropTypes.func,
     circle: PropTypes.bool,
+    spinnerName: PropTypes.string,
     size: PropTypes.number,
     src: PropTypes.string,
   }
   renderUserProfilePreview = () => {
-    if (this.props.authenticated && this.props.accessToken) {
+    const { accessToken } = this.props
+    console.log(accessToken)
+    if (this.props.authenticated && this.props.providerUserInfo) {
       return (
         <div>
           <Avatar
             circle
             size={100}
-            src={this.props.profile.avatar_url}
+            src={this.props.providerUserInfo.photoURL}
           />
           <Heading level={5}>
-            { this.props.profile.name.split(' ')[0] }
+            { this.props.providerUserInfo.displayName.split(' ')[0] }
           </Heading>
-          <Badge pill rounded theme="primary">
-           <GoRepo /> { this.props.profile.public_repos }
-          </Badge>
         </div>
       )
-
     }
     else {
       return (
@@ -57,6 +57,7 @@ function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
     profile: state.user.authUserProfile,
+    providerUserInfo: state.user.providerUserInfo,
     accessToken: state.auth.accessToken
   }
 }

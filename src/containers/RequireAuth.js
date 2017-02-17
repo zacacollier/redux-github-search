@@ -3,7 +3,7 @@ import { connect }          from 'react-redux';
 import { browserHistory }   from 'react-router';
 import * as Actions         from '../actions';
 
-export default function(WrappedComponent) {
+export default function (WrappedComponent) {
   class Auth extends Component {
     componentWillMount() {
       if (!this.props.authenticated) {
@@ -27,9 +27,9 @@ export default function(WrappedComponent) {
 
   function mapStateToProps(state) {
     return {
-      authenticated: state.auth.authenticated
+      authenticated: state.auth.authenticated,
+      accessToken: state.auth.accessToken
     };
   }
-
   return connect(mapStateToProps, Actions)(Auth);
 }
