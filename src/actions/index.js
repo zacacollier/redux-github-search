@@ -1,15 +1,18 @@
-import request            from 'superagent';
 import Firebase           from 'firebase';
 import { browserHistory } from 'react-router';
+import request            from 'superagent';
 
 export const AUTH_ERROR        = 'AUTH_ERROR';
 export const AUTH_USER         = 'AUTH_USER';
 export const AUTH_USER_PROFILE = 'AUTH_USER_PROFILE';
+export const VERIFY_AUTH       = 'VERIFY_AUTH';
 export const REQUEST_GH_USER   = 'REQUEST_GH_USER';
+export const SEARCH_ERROR      = 'SEARCH_ERROR';
 export const SIGN_IN_USER      = 'SIGN_IN_USER';
 export const SIGN_OUT_USER     = 'SIGN_OUT_USER';
 
 const GH_USER_URL = 'https://api.github.com/user';
+const GH_SEARCH_URL = 'https://api.github.com/search/users';
 
 // Firebase configuration & initialization
 const config = {
@@ -21,12 +24,12 @@ const config = {
 }
 const provider = new Firebase.auth.GithubAuthProvider();
 Firebase.initializeApp(config);
-provider.addScope('repo');
+// provider.addScope('repo');
 
-export function authUser(response) {
+export function authUser(token, authUser) {
   return {
     type: AUTH_USER,
-    payload: response
+    payload: { token, authUser }
   }
 }
 
@@ -51,7 +54,9 @@ export function signInUser(credentials) {
     Firebase.auth().signInWithPopup(provider)
       .then(response => {
         let token = response.credential.accessToken
-        dispatch(authUser(token));
+        console.log(token)
+        let user = response.user
+        dispatch(authUser(token, user));
         browserHistory.push('/')
       })
       .catch(error => {
@@ -59,10 +64,23 @@ export function signInUser(credentials) {
       })
   }
 }
-export function requestGitHubUserProfile(accessToken) {
+
+export function signOutUser() {
+  return function (dispatch) {
+    Firebase.auth().signOut()
+      .then(response => {
+        dispatch({
+          type: SIGN_OUT_USER
+        })
+        browserHistory.push('/signup')
+      })
+  }
+}
+
+export function requestGitHubUserProfile(term, accessToken) {
   return function (dispatch) {
     request
-      .get(`${GH_USER_URL}`)
+      .get(`${GH_USER_URL}${term}`)
       .set(`Authorization`, `token ${accessToken.stsTokenManager.accessToken}`)
       .then(response => {
         console.log(response)
@@ -74,21 +92,42 @@ export function requestGitHubUserProfile(accessToken) {
   }
 }
 
+export function requestGitHubUserSearch(term, accessToken) {
+      //.set(`idToken`, `${accessToken}`)
+  return function (dispatch) {
+    request
+      .get(`${GH_SEARCH_URL}?q=${term}`)
+      .set(`Authorization`, `Token ${accessToken}`)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        dispatch(searchError(error))
+      })
+  }
+}
+
+export function searchError(error) {
+  return {
+    type: SEARCH_ERROR,
+    payload: error
+  }
+}
+
 export function verifyAuth() {
   return function (dispatch) {
     Firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        dispatch(authUser(user));
+        console.log(user)
+        dispatch({
+          type: VERIFY_AUTH,
+          authenticated: true,
+          payload: user
+        });
       }
       else {
         dispatch(signOutUser());
       }
     })
-  }
-}
-
-export function signOutUser() {
-  return {
-    type: SIGN_OUT_USER
   }
 }

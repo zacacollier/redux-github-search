@@ -9,6 +9,7 @@
     "apollo-client": "^0.8.5",
     "basscss": "^8.0.2",
     "firebase": "^3.6.9",
+    "github": "^9.0.0",
     "gx": "^1.0.0-rc3",
     "react": "^15.4.2",
     "react-apollo": "^0.10.1",

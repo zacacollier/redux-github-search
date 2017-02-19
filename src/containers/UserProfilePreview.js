@@ -3,7 +3,8 @@ import React, {
        PropTypes }          from 'react';
 import { Avatar,
          Badge,
-         Heading }          from 'rebass';
+         Heading,
+         ButtonCircle }     from 'rebass';
 import { FaGithub }         from 'react-icons/lib/fa';
 import { GoRepo }           from 'react-icons/lib/go';
 import { connect }          from 'react-redux';
@@ -19,19 +20,22 @@ class UserProfilePreview extends Component {
     size: PropTypes.number,
     src: PropTypes.string,
   }
+  handleSignOut = () => {
+    this.props.signOutUser()
+  }
   renderUserProfilePreview = () => {
+            //src={this.props.accessToken.photoURL}
+             //{ this.props.accessToken.displayName.split(' ')[0] }
     const { accessToken } = this.props
-    console.log(accessToken)
-    if (this.props.authenticated && this.props.providerUserInfo) {
+    if (this.props.authenticated) {
       return (
         <div>
           <Avatar
             circle
             size={100}
-            src={this.props.providerUserInfo.photoURL}
           />
           <Heading level={5}>
-            { this.props.providerUserInfo.displayName.split(' ')[0] }
+            "name"
           </Heading>
         </div>
       )
@@ -47,6 +51,12 @@ class UserProfilePreview extends Component {
   render() {
     return (
       <div className='profile-preview'>
+        <form onSubmit={() => this.props.onSignOut(this.handleSignOut)}>
+          <ButtonCircle
+            backgroundColor="pink"
+            action="submit"
+          />
+        </form>
       { this.props.accessToken && this.renderUserProfilePreview() }
       </div>
     )
@@ -56,8 +66,7 @@ class UserProfilePreview extends Component {
 function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
-    profile: state.user.authUserProfile,
-    providerUserInfo: state.user.providerUserInfo,
+    providerUserInfo: state.auth.providerUserInfo,
     accessToken: state.auth.accessToken
   }
 }

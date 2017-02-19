@@ -6,18 +6,19 @@ import * as Actions         from '../actions';
 export default function (WrappedComponent) {
   class Auth extends Component {
     componentWillMount() {
-      if (!this.props.authenticated) {
-        let hasLocalStorageUser = false;
-        // TODO: fix this so it ain't spoofable
-        for (let key in localStorage) {
-          if (key.startsWith("firebase:authUser:")) {
-            hasLocalStorageUser = true;
-          }
-        }
-        if (!hasLocalStorageUser) {
-          browserHistory.push('/login');
-        }
-      }
+      return
+//       if (!this.props.authenticated) {
+//         let hasLocalStorageUser = false;
+//         // TODO: fix this so it ain't spoofable
+//         for (let key in localStorage) {
+//           if (key.startsWith("firebase:authUser:")) {
+//             hasLocalStorageUser = true;
+//           }
+//         }
+//         if (!hasLocalStorageUser) {
+//           browserHistory.push('/login');
+//         }
+      // }
     }
 
     render() {
