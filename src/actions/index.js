@@ -15,7 +15,7 @@ const GH_USER_URL = 'https://api.github.com/user';
 const GH_SEARCH_URL = 'https://api.github.com/search/users';
 
 // Firebase configuration & initialization
-const config = {
+const firebaseConfig = {
   apiKey: "AIzaSyBCJglFJI71_M64_JpEMjbhBeMoHCz-3OQ",
   authDomain: "redux-github-search.firebaseapp.com",
   databaseURL: "https://redux-github-search.firebaseio.com",
@@ -23,8 +23,8 @@ const config = {
   messagingSenderId: "104513704867"
 }
 const provider = new Firebase.auth.GithubAuthProvider();
-Firebase.initializeApp(config);
-// provider.addScope('repo');
+Firebase.initializeApp(firebaseConfig);
+provider.addScope('repo');
 
 export function authUser(token, authUser) {
   return {
@@ -55,8 +55,8 @@ export function signInUser(credentials) {
         console.log(token)
         let user = response.user
         dispatch(authUser(token, user));
-        browserHistory.push('/')
       })
+      .then(() => browserHistory.push('/'))
       .catch(error => {
         dispatch(authError(error));
       })

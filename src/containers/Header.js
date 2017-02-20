@@ -11,7 +11,7 @@ const Header = () => {
     return (
       <div className='header'>
         <UserProfilePreview />
-        <Searchbar onTermChange={this.props.actions.requestGitHubUser} />
+        <Searchbar onTermChange={this.props.actions.requestGitHubUserSearch} />
       </div>
     );
 };
