@@ -17,7 +17,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose (
-      applyMiddleware(reduxThunk, debounce),
+      applyMiddleware(reduxThunk, debounce, reduxThunk),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );
@@ -29,7 +29,7 @@ export default function configureStore(initialState) {
     });
   }
 
-  store.dispatch(Actions.verifyAuth());
+  //store.dispatch(Actions.verifyAuth());
 
   return store;
 }

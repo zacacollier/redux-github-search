@@ -10,6 +10,7 @@ import { GoRepo }           from 'react-icons/lib/go';
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
 import Spinner              from 'react-spinkit';
+import { bindActionCreators } from 'redux';
 import * as Actions         from '../actions';
 
 class UserProfilePreview extends Component {
@@ -24,15 +25,16 @@ class UserProfilePreview extends Component {
     this.props.signOutUser()
   }
   renderUserProfilePreview = () => {
-    const { accessToken } = this.props
     if (this.props.authenticated) {
       return (
         <div>
           <Avatar
             circle
             size={100}
+            src={ this.props.firebaseUserInfo.photoURL }
           />
           <Heading level={5}>
+           { this.props.firebaseUserInfo.displayName.split(' ')[0] }
           </Heading>
         </div>
       )
@@ -67,5 +69,10 @@ function mapStateToProps(state) {
     accessToken: state.auth.accessToken
   }
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
 
-export default connect(mapStateToProps, Actions)(UserProfilePreview);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfilePreview);

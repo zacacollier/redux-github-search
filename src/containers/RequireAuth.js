@@ -1,26 +1,25 @@
-import React, { Component } from 'react';
-import { connect }          from 'react-redux';
-import { browserHistory }   from 'react-router';
-import * as Actions         from '../actions';
+import React, { Component }   from 'react';
+import { connect }            from 'react-redux';
+import { browserHistory }     from 'react-router';
+import { bindActionCreators } from 'redux';
+import * as Actions           from '../actions';
 
 export default function (WrappedComponent) {
   class Auth extends Component {
-    componentWillMount() {
-      return
-       if (!this.props.authenticated) {
-         let hasLocalStorageUser = false;
-         // TODO: fix this so it ain't spoofable
-         for (let key in localStorage) {
-           if (key.startsWith("firebase:authUser:")) {
-             hasLocalStorageUser = true;
-           }
-         }
-         if (!hasLocalStorageUser) {
-           browserHistory.push('/signup');
-         }
-       }
+    constructor(props) {
+      super(props)
+      if (!this.props.authenticated) {
+        let hasLocalStorageUser = false;
+        for (let key in localStorage) {
+          if (key.startsWith("firebase:authUser:")) {
+            hasLocalStorageUser = true;
+          }
+        }
+        if (!hasLocalStorageUser) {
+          browserHistory.push('/signup');
+        }
+      }
     }
-
     render() {
       return <WrappedComponent {...this.props} />
     }
@@ -32,5 +31,10 @@ export default function (WrappedComponent) {
       accessToken: state.auth.accessToken
     };
   }
-  return connect(mapStateToProps, Actions)(Auth);
+  function mapDispatchToProps(dispatch) {
+    return {
+      actions: bindActionCreators(Actions, dispatch)
+    };
+  }
+  return connect(mapStateToProps, mapDispatchToProps)(Auth);
 }

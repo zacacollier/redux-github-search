@@ -1,4 +1,4 @@
-import _     		  from 'lodash';
+import _                  from  'lodash';
 import Firebase           from 'firebase';
 import { browserHistory } from 'react-router';
 import request            from 'superagent';
@@ -114,15 +114,7 @@ export function searchError(error) {
 export function verifyAuth() {
   return function (dispatch) {
     Firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        dispatch({
-          type: VERIFY_AUTH,
-          authenticated: true
-        });
-      }
-      else {
-        dispatch(signOutUser());
-      }
+      return user ? dispatch({ type: VERIFY_AUTH, payload: user }) : dispatch(signOutUser())
     })
   }
 }
