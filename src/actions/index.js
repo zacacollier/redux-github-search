@@ -47,8 +47,6 @@ export function authError(error) {
   }
 }
 
-// Send OAuth request to GitHub via Firebase,
-// then dispatch a request for User Profile data
 export function signInUser(credentials) {
   return function (dispatch) {
     Firebase.auth().signInWithPopup(provider)
@@ -93,7 +91,6 @@ export function requestGitHubUserProfile(term, accessToken) {
 }
 
 export function requestGitHubUserSearch(term, accessToken) {
-      //.set(`idToken`, `${accessToken}`)
   return function (dispatch) {
     request
       .get(`${GH_SEARCH_URL}?q=${term}`)

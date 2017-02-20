@@ -26,9 +26,10 @@ export default function AuthReducer(state = initialState, action) {
       }
     case SIGN_OUT_USER:
       return {
-        ...state,
         accessToken: null,
-        authenticated: false
+        authenticated: false,
+        error: null,
+        firebaseUserInfo: null
       }
     case VERIFY_AUTH:
       return {

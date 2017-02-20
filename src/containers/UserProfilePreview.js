@@ -24,8 +24,6 @@ class UserProfilePreview extends Component {
     this.props.signOutUser()
   }
   renderUserProfilePreview = () => {
-            //src={this.props.accessToken.photoURL}
-             //{ this.props.accessToken.displayName.split(' ')[0] }
     const { accessToken } = this.props
     if (this.props.authenticated) {
       return (
@@ -33,9 +31,10 @@ class UserProfilePreview extends Component {
           <Avatar
             circle
             size={100}
+            src={this.props.firebaseUserInfo.photoURL}
           />
           <Heading level={5}>
-            "name"
+           { this.props.firebaseUserInfo.displayName.split(' ')[0] }
           </Heading>
         </div>
       )
@@ -66,7 +65,7 @@ class UserProfilePreview extends Component {
 function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
-    providerUserInfo: state.auth.providerUserInfo,
+    firebaseUserInfo: state.auth.firebaseUserInfo,
     accessToken: state.auth.accessToken
   }
 }

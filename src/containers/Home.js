@@ -23,13 +23,13 @@ function mapStateToProps(state) {
   return {
     lists: state.lists,
     accessToken: state.auth.accessToken
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(Actions, dispatch)
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

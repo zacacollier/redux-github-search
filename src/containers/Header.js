@@ -13,19 +13,19 @@ const Header = () => {
         <UserProfilePreview />
         <Searchbar onTermChange={this.props.actions.requestGitHubUser} />
       </div>
-    )
-}
+    );
+};
 
 function mapStateToProps(state) {
   return {
     lists: state.lists
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(Actions, dispatch)
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

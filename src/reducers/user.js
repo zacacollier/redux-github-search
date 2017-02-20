@@ -1,9 +1,7 @@
 import { AUTH_USER, AUTH_USER_PROFILE } from '../actions';
 
 const initialState = {
-  authUserProfile: null,
   isAuthenticated: false,
-  providerUserInfo: null,
   savedLists: []
 }
 
@@ -12,12 +10,10 @@ export default function user(state = initialState, action) {
     case AUTH_USER:
       return {
         ...state,
-        providerUserInfo: action.payload
       }
     case AUTH_USER_PROFILE:
       return {
         ...state,
-        authUserProfile: action.payload.body,
         isAuthenticated: true
       }
     default:
