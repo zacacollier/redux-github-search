@@ -31,10 +31,8 @@ class UserProfilePreview extends Component {
           <Avatar
             circle
             size={100}
-            src={this.props.firebaseUserInfo.photoURL}
           />
           <Heading level={5}>
-           { this.props.firebaseUserInfo.displayName.split(' ')[0] }
           </Heading>
         </div>
       )

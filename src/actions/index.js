@@ -1,3 +1,4 @@
+import _     		  from 'lodash';
 import Firebase           from 'firebase';
 import { browserHistory } from 'react-router';
 import request            from 'superagent';
@@ -52,7 +53,6 @@ export function signInUser(credentials) {
     Firebase.auth().signInWithPopup(provider)
       .then(response => {
         let token = response.credential.accessToken
-        console.log(token)
         let user = response.user
         dispatch(authUser(token, user));
       })
@@ -115,11 +115,9 @@ export function verifyAuth() {
   return function (dispatch) {
     Firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user)
         dispatch({
           type: VERIFY_AUTH,
-          authenticated: true,
-          payload: user
+          authenticated: true
         });
       }
       else {
