@@ -9,7 +9,6 @@ import { FaGithub }         from 'react-icons/lib/fa';
 import { GoRepo }           from 'react-icons/lib/go';
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
-import Spinner              from 'react-spinkit';
 import { bindActionCreators } from 'redux';
 import * as Actions         from '../actions';
 

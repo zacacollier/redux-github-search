@@ -29,7 +29,7 @@ export default function configureStore(initialState) {
     });
   }
 
-  //store.dispatch(Actions.verifyAuth());
+  store.dispatch(Actions.verifyAuth());
 
   return store;
 }

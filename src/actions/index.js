@@ -54,8 +54,11 @@ export function signInUser(credentials) {
       .then(response => {
         let token = response.credential.accessToken
         let user = response.user
+        localStorage.setItem('accessToken', token)
         dispatch(authUser(token, user));
+        dispatch(verifyAuth(token))
       })
+      //.then((token) => dispatch(verifyAuth(token)))
       .then(() => browserHistory.push('/'))
       .catch(error => {
         dispatch(authError(error));
@@ -111,10 +114,21 @@ export function searchError(error) {
   }
 }
 
-export function verifyAuth() {
-  return function (dispatch) {
-    Firebase.auth().onAuthStateChanged(user => {
-      return user ? dispatch({ type: VERIFY_AUTH, payload: user }) : dispatch(signOutUser())
+export function verifyAuth(token) {
+  return function (dispatch, token) {
+    Firebase.auth().onAuthStateChanged((user, token) => {
+      if (user) {
+        for (let key in localStorage) {
+          if (key.startsWith("accessToken")) {
+            token = localStorage.getItem(key)
+            console.log(key)
+          }
+        }
+        dispatch({ type: VERIFY_AUTH, payload: user, token: token })
+      }
+      else {
+        dispatch(signOutUser())
+      }
     })
   }
 }

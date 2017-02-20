@@ -19,8 +19,8 @@ const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={RequireAuth(Home)} />
+      <Route path="/" component={RequireAuth(App)} >
+        <Route path="home" component={Home} />
         <Route path="signup" component={Signup} />
       </Route>
     </Router>

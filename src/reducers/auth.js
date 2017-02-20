@@ -36,7 +36,7 @@ export default function AuthReducer(state = initialState, action) {
     case VERIFY_AUTH:
       return {
         ...state,
-        accessToken: action.payload.token,
+        accessToken: action.token,
         authenticated: true,
         firebaseUserInfo: action.payload
       }
