@@ -1,4 +1,4 @@
-import _                  from  'lodash';
+import _                  from 'lodash';
 import Firebase           from 'firebase';
 import { browserHistory } from 'react-router';
 import request            from 'superagent';
@@ -73,6 +73,7 @@ export function signOutUser() {
         dispatch({
           type: SIGN_OUT_USER
         })
+        localStorage.removeItem('accessToken')
         browserHistory.push('/signup')
       })
   }
@@ -121,10 +122,10 @@ export function verifyAuth(token) {
         for (let key in localStorage) {
           if (key.startsWith("accessToken")) {
             token = localStorage.getItem(key)
-            console.log(key)
           }
         }
         dispatch({ type: VERIFY_AUTH, payload: user, token: token })
+        browserHistory.push('/home')
       }
       else {
         dispatch(signOutUser())
