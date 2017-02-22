@@ -4,10 +4,13 @@ import { bindActionCreators } from 'redux';
 import * as Actions           from '../actions';
 import                           '../styles/App.css';
 
+// TODO: write some regex to smarten input scrubbing
 class Searchbar extends Component {
   onInputChange = (term) => {
     const { accessToken } = this.props
-    this.props.onTermChange(term, accessToken);
+    if (term.split('').length > 3) {
+      this.props.onTermChange(term, accessToken)
+    }
   }
 
   render() {
