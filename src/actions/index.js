@@ -9,6 +9,7 @@ export const AUTH_USER_PROFILE = 'AUTH_USER_PROFILE';
 export const VERIFY_AUTH       = 'VERIFY_AUTH';
 export const REQUEST_GH_USER   = 'REQUEST_GH_USER';
 export const SEARCH_ERROR      = 'SEARCH_ERROR';
+export const SEARCH_RAW_RESULT = 'SEARCH_RAW_RESULT';
 export const SIGN_IN_USER      = 'SIGN_IN_USER';
 export const SIGN_OUT_USER     = 'SIGN_OUT_USER';
 
@@ -100,7 +101,7 @@ export function requestGitHubUserSearch(term, accessToken) {
       .get(`${GH_SEARCH_URL}?q=${term}`)
       .set(`Authorization`, `Token ${accessToken}`)
       .then(response => {
-        console.log(response)
+        response.body.items.length ? dispatch({ type: SEARCH_RAW_RESULT, payload: response.body.items }) : null
       })
       .catch(error => {
         dispatch(searchError(error))

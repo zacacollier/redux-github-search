@@ -1,20 +1,23 @@
-import { AUTH_USER, AUTH_USER_PROFILE } from '../actions';
+import { AUTH_USER, AUTH_USER_PROFILE, SEARCH_RAW_RESULT, SEARCH_ERROR } from '../actions';
 
+// results come in as 'null' if the response doesn't contain any items (if response.body.items.length === 0)
 const initialState = {
-  isAuthenticated: false,
+  searchError: null,
+  searchResults: [],
   savedLists: []
 }
 
 export default function user(state = initialState, action) {
   switch (action.type) {
-    case AUTH_USER:
+    case SEARCH_RAW_RESULT:
       return {
         ...state,
+        searchResults: action.payload
       }
-    case AUTH_USER_PROFILE:
+    case SEARCH_ERROR:
       return {
         ...state,
-        isAuthenticated: true
+        searchError: action.payload
       }
     default:
       return state;
