@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_USER_PROFILE, SEARCH_RAW_RESULT, SEARCH_ERROR } from '../actions';
+import { SEARCH_RAW_RESULT, SEARCH_ERROR } from '../actions';
 
 // results come in as 'null' if the response doesn't contain any items (if response.body.items.length === 0)
 const initialState = {

@@ -3,7 +3,7 @@ import ReactDOM       from 'react-dom';
 import { Provider }   from 'react-redux';
 import {
   browserHistory,
-  IndexRoute,
+//  IndexRoute,
   Route,
   Router,
        }              from 'react-router';

@@ -1,6 +1,6 @@
 import React, { Component }   from 'react';
 import { connect }            from 'react-redux';
-import Spinner                from 'react-spinkit';
+//import Spinner                from 'react-spinkit';
 import * as Actions           from '../actions';
 import                             '../styles/App.css';
 

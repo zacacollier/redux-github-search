@@ -101,7 +101,7 @@ export function requestGitHubUserSearch(term, accessToken) {
       .get(`${GH_SEARCH_URL}?q=${term}`)
       .set(`Authorization`, `Token ${accessToken}`)
       .then(response => {
-        response.body.items.length ? dispatch({ type: SEARCH_RAW_RESULT, payload: response.body.items }) : null
+        return response.body.items.length ? dispatch({ type: SEARCH_RAW_RESULT, payload: response.body.items }) : null
       })
       .catch(error => {
         dispatch(searchError(error))

@@ -2,11 +2,11 @@ import React, {
        Component,
        PropTypes }          from 'react';
 import { Avatar,
-         Badge,
+//         Badge,
          Heading,
          ButtonCircle }     from 'rebass';
 import { FaGithub }         from 'react-icons/lib/fa';
-import { GoRepo }           from 'react-icons/lib/go';
+//import { GoRepo }           from 'react-icons/lib/go';
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
 import { bindActionCreators } from 'redux';

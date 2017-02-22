@@ -1,6 +1,5 @@
 import React, { Component }   from 'react';
 import { connect }            from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as Actions           from '../actions';
 import                           '../styles/App.css';
 
@@ -28,12 +27,6 @@ class Searchbar extends Component {
 function mapStateToProps(state) {
   return {
     accessToken: state.auth.accessToken
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
   }
 }
 
