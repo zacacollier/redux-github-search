@@ -6,6 +6,7 @@ import Searchbar              from '../components/Searchbar';
 import UserProfilePreview     from '../containers/UserProfilePreview';
 import                             '../styles/App.css';
 
+// this is where dumb preview components will spawn
 class Home extends Component {
   render() {
     return (
