@@ -7,6 +7,8 @@ export const AUTH_ERROR        = 'AUTH_ERROR';
 export const AUTH_USER         = 'AUTH_USER';
 export const AUTH_USER_PROFILE = 'AUTH_USER_PROFILE';
 export const VERIFY_AUTH       = 'VERIFY_AUTH';
+export const REQUEST_GH_SEARCH = 'REQUEST_GH_SEARCH';
+export const FETCH_GH_SEARCH   = 'FETCH_GH_SEARCH';
 export const REQUEST_GH_USER   = 'REQUEST_GH_USER';
 export const SEARCH_ERROR      = 'SEARCH_ERROR';
 export const SEARCH_RAW_RESULT = 'SEARCH_RAW_RESULT';
@@ -92,6 +94,14 @@ export function requestGitHubUserProfile(term, accessToken) {
       .catch(error => {
         dispatch(authError(error))
       })
+  }
+}
+
+export function fetchGitHubUserSearch(term, accessToken) {
+  return {
+    type: FETCH_GH_SEARCH,
+    payload: term,
+    token: accessToken
   }
 }
 

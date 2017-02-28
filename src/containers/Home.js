@@ -13,7 +13,7 @@ class Home extends Component {
       <div className='app'>
         <div className='header'>
           <UserProfilePreview onSignOut={this.props.actions.signOutUser} />
-          <Searchbar onTermChange={this.props.actions.requestGitHubUserSearch} />
+          <Searchbar onTermChange={this.props.actions.fetchGitHubUserSearch} />
         </div>
       </div>
     );
